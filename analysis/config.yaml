@@ -1,0 +1,12 @@
+fs_hz: 2000
+w3_rad_s: 1.0
+demod_lp_frac_of_w3: 0.2
+nbw_rel: 0.3
+welch_nperseg: 8192
+welch_noverlap: 4096
+seeds_peak: 20
+seeds_side: 8
+thetas_side: [0.7, 1.3]
+thetas_peak: [1.0]
+burn_frac: 0.25
+t_final: 8.0
