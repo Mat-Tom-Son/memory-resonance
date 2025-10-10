@@ -1,0 +1,1 @@
+Theta,tau_B,calibration,cutoff,N,N_pseudo,model,R_env,band_power,energy,envelope_rms,envelope_rms_ratio,baseband_power,baseband_ratio,narrowband_power,occ_target,occ_meas,rel_occ_err,n1_tail,occ_ratio_achieved,gpm_scale,nudges_used,hit_clamp,g_used,kappa,Jw1_target,Jw1_est,rel_Jw1_err,nbar,a1_init_alpha,burn_frac,omega_c,t_final,n_time,config_hash

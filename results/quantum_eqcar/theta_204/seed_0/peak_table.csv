@@ -1,0 +1,5 @@
+calibration,cutoff,theta_star,tau_B_star,R_env_peak
+equal_carrier,4,2.04,0.00204,1
+equal_carrier,6,2.04,0.00204,1
+equal_carrier,8,2.04,0.00204,1
+equal_carrier,10,2.04,0.00204,1

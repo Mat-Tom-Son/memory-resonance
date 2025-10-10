@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(.venv/bin/python3 -m pytest tests/test_gaussian_parity.py -v)",
+      "Bash(.venv/bin/python3:*)",
+      "Bash(timeout:*)",
+      "Bash(if [ -f tests/test_metrics.py ])",
+      "Bash(then .venv/bin/python3 -m pytest tests/test_metrics.py -q)",
+      "Bash(else echo \"test_metrics.py not found - skipping\")",
+      "Bash(fi)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

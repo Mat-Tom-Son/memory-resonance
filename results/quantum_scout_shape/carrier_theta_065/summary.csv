@@ -1,0 +1,3 @@
+Theta,tau_B,calibration,cutoff,N,N_pseudo,model,R_env,band_power,energy,envelope_rms,envelope_rms_ratio,n1_tail,occ_ratio_achieved,gpm_scale,occ_updates,hit_clamp,nbar,a1_init_alpha,burn_frac,omega_c,t_final,n_time
+0.0,0.0,equal_carrier,4.0,5.0,4.0,lindblad,1.0,8.920514752226429e-16,5.570645243963153e-15,6.526649587478825e-08,1.0,0.01982862219041692,1.0,1.0,0,False,0.02,0.04,0.25,1000.0,8.0,300
+0.6500000000000001,0.0006500000000000002,equal_carrier,4.0,5.0,4.0,pseudomode,1.0296507856739145,9.185015023245687e-16,8.466743452001348e-13,6.620822862135697e-08,1.0144290379611525,0.019999985455712778,1.008642217479875,1.0,0,False,0.02,0.04,0.25,1000.0,8.0,300

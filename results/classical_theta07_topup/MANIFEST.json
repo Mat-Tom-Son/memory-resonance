@@ -1,0 +1,23 @@
+{
+  "timestamp": "2025-10-10T20:01:04.623511Z",
+  "config_hash": "c7dc5aa1a8178e413d3d49e0b18cfd61e6531344920f0331135cafb4dbaaed17",
+  "calibration": "equal_variance",
+  "psd_norm": "onesided",
+  "noise_param": 1.0,
+  "thetas": [
+    0.7
+  ],
+  "seeds": {
+    "peak": 0,
+    "flank": 60
+  },
+  "fs_hz": 2000.0,
+  "t_final": 8.0,
+  "burn_frac": 0.25,
+  "nbw_rel": 0.3,
+  "welch": {
+    "nperseg": 8192,
+    "noverlap": 4096
+  },
+  "run_id": "ca6b3379"
+}
