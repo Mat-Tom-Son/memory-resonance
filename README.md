@@ -111,7 +111,42 @@ python quick_diagnostic.py
 
 ---
 
+## For Peer Reviewers
+
+To quickly verify the paper's claims:
+
+1. **Check the data**: `cat results/theta_sweep_today.csv | head`
+2. **Regenerate Figure 1**: `cd figures && PYTHONPATH=.. python make_figA.py` (~5 sec)
+3. **Run validation suite**: `pytest tests/test_quantum_hierarchy.py -v` (~20 sec)
+4. **Config hash verification**: All figures embed `c7dc5aa1` - grep for it in the PDF or check figure captions
+
+**Expected verification time**: < 5 minutes
+
+---
+
+## What's Novel Here?
+
+We **do not** claim novelty of the Θ≈1 phenomenon itself (it appears across stochastic resonance, coherence resonance, and noise-assisted transport).
+
+**Our contribution:**
+- **Pattern recognition**: Formalizing the cross-domain recurrence as a unified Memory-Resonance Condition
+- **Mechanism taxonomy**: Classes S/C/M with operational diagnostics to distinguish spectral overlap, coherent modulation, and memory backaction
+- **Falsifiable tests**: PSD-matched surrogate (tests Class S), equal-carrier scan (tests Class M)
+- **Rigorous validation**: Pre-registered gates (PSD-NRMSE < 0.03, |d_z| < 0.30, |ΔJ|/J* ≤ 0.02) across classical/quantum divide
+- **Actionable design rule**: Boxed Design Card with step-by-step guidance for practitioners
+
+---
+
 ## Key Results
+
+### Results Summary
+
+| Pillar | Mechanism | Gate | Threshold | Observed | Status |
+|--------|-----------|------|-----------|----------|--------|
+| Classical | Spectral overlap | PSD-NRMSE | < 0.03 | 0.006-0.007 | ✓ Pass |
+| Classical | Spectral overlap | \|d_z\| | < 0.30 | 0.11-0.30 | ✓ Pass |
+| Quantum | Memory backaction | \|ΔJ\|/J* | ≤ 0.02 | < 0.02 | ✓ Pass |
+| Both | Robustness | Metric consistency | - | Baseband ≈ Narrowband | ✓ Pass |
 
 ### Classical Pillar (Class S - Spectral Overlap)
 
@@ -257,6 +292,37 @@ If you use this code or data in your research, please cite:
 ```
 
 *(Update arXiv number once preprint is live)*
+
+---
+
+## FAQ
+
+**Q: Is this the same as stochastic resonance?**
+
+A: Similar observable (Θ≈1 optimum), but we recognize it as a broader cross-domain pattern. Stochastic resonance is typically Class S (spectral overlap). The MRC framework also covers Class C (coherent modulation) and Class M (memory backaction).
+
+**Q: Can I use this for my system?**
+
+A: Yes! Check if your system has: (1) timescale separation between fast and slow dynamics, (2) a tunable environmental correlation time τ_B, and (3) a measurable slow-band observable. See the Design Card in the paper (after Methods section) for step-by-step guidance.
+
+**Q: What if I have multiple ω_fast peaks?**
+
+A: See "Failure modes" in the Design Card - multimode ambiguity is a known limitation. The MRC applies best when there's a single dominant transduction frequency. For multi-peak systems, you may need controller synthesis instead of passive tuning.
+
+**Q: How do I know which mechanism class (S/C/M) applies to my system?**
+
+A: Run the diagnostics:
+- **Class S test**: Does a PSD-matched surrogate reproduce the Θ≈1 optimum? (Pass → Class S)
+- **Class M test**: Does the optimum persist under equal-carrier conditions (fixed spectral weight)? (Yes → Class M)
+- **Class C**: If both tests fail, inspect for weak nonlinearity or coherent modulation effects
+
+**Q: What if my τ_B isn't tunable?**
+
+A: See the "Optional controller" in the Design Card. You can use a two-point dither or sample τ_B from the MR band [0.7, 1.4] × (1/ω_fast) to hedge against model mismatch.
+
+**Q: Why pre-register gates instead of using p-values?**
+
+A: Practical equivalence gates (PSD-NRMSE < 0.03, |d_z| < 0.30) are more meaningful than statistical significance for equivalence testing. We report p-values for transparency (in supplement), but gates are the primary acceptance criterion.
 
 ---
 
