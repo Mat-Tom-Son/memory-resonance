@@ -97,12 +97,13 @@ Photosynthesis & Exciton network + structured bath & Noise-assisted transport & 
 \end{tabularx}
 \end{table}
 
+\clearpage
 \section{Framework: overlap functional and classes}
 Let $H_{n\leftarrow\xi}(\omega)$ denote the transfer from bath $\xi$ to a slow node $n$ and let $S_\xi(\omega;\tau_B)$ be the bath PSD. Define the slow-band objective
 \begin{equation}
 J(\tau_B) = \int_{\Omega_{\rm slow}} \big|H_{n\leftarrow\xi}(\omega)\big|^2\, S_\xi(\omega;\tau_B)\, \mathrm{d}\omega,
 \end{equation}
-with $\Omega_{\rm slow}$ a band around $\omega_n$. Under timescale separation and a dominant lobe near $\omega_{\rm fast}$, $J(\tau_B)$ typically exhibits a shallow interior optimum when the bath peak aligns with this lobe, yielding $\Theta \equiv \omega_{\mathrm{fast}} \tau_B \approx 1$. We term this the \emph{Memory-Resonance Condition}.
+with $\Omega_{\rm slow}$ a band around $\omega_n$. \emph{For Class S (LTI systems), this reduces to the standard output variance formula via the Wiener-Khinchin theorem}: the steady-state response variance is the integral of the power spectral density weighted by the squared system gain. Under timescale separation and a dominant lobe near $\omega_{\rm fast}$, $J(\tau_B)$ typically exhibits a shallow interior optimum when the bath peak aligns with this lobe, yielding $\Theta \equiv \omega_{\mathrm{fast}} \tau_B \approx 1$. We term this the \emph{Memory-Resonance Condition}. The MRC generalizes this frequency-domain bandwidth-matching principle beyond linear systems to Classes C and M, where the functional form persists but the underlying mechanism differs.
 
 \paragraph{Why an interior maximum?}
 For OU noise with fixed power $D$ and $S_{\rm OU}(\omega;\kappa) = 2D\kappa/(\omega^2+\kappa^2)$, short $\tau_B$ ($\kappa$ large) spreads power across all frequencies but dilutes it at $\omega_{\rm fast}$. Long $\tau_B$ ($\kappa$ small) concentrates power near DC, missing the system's peak gain at $\omega_{\rm fast}$. The optimum arises from the product $|H|^2 S$: increasing $\tau_B$ narrows the bath spectrum (raising $S$ at low $\omega$), but the system gain $|H(\omega)|^2$ peaks elsewhere. Maximum overlap occurs when the bath centroid $\sim 1/\tau_B$ aligns with the system's dominant transduction frequency $\omega_{\rm fast}$, hence $\omega_{\rm fast} \tau_B \approx 1$. This interior trade-off is \emph{not} universal---heavily multi-peaked $H(\omega)$ or power-law baths can yield monotonic curves---but recurs widely under single-lobe + timescale-separation conditions.
@@ -124,7 +125,10 @@ We define the system's fast scale $\omega_{\mathrm{fast}}$ as the dominant frequ
 
 \emph{Periodically driven:} Use the leading Floquet rate (dominant quasi-energy with nonzero projection onto the measured channel).
 
-We report the chosen mode and include a sensitivity analysis when multiple candidates are comparable. \emph{Our testbed:} In the three-oscillator hierarchy, $\omega_{\mathrm{fast}}=\omega_1=1.0\,\mathrm{rad/s}$ (dominant peak in $|H_{\omega_3\leftarrow\mathrm{bath}}(\omega)|^2$).
+We report the chosen mode and include a sensitivity analysis when multiple candidates are comparable (quantitative threshold: if $|H(\omega_1)|^2 / |H(\omega_2)|^2 > 3$, use $\omega_1$ as dominant; else report sensitivity to both). \emph{Our testbed:} In the three-oscillator hierarchy, $\omega_{\mathrm{fast}}=\omega_1=1.0\,\mathrm{rad/s}$ (dominant peak in $|H_{\omega_3\leftarrow\mathrm{bath}}(\omega)|^2$).
+
+\paragraph*{Timescale separation criterion.}
+The MRC assumes separation between fast transduction ($\omega_{\mathrm{fast}}$) and slow observable ($\omega_{\mathrm{slow}}$). We adopt: \emph{Strong separation} ($\omega_{\mathrm{fast}}/\omega_{\mathrm{slow}} > 5$, MRC applies); \emph{Weak separation} ($1 < \omega_{\mathrm{fast}}/\omega_{\mathrm{slow}} \le 5$, MRC may apply with caution); \emph{No separation} ($\omega_{\mathrm{fast}}/\omega_{\mathrm{slow}} \le 1$, MRC not applicable). In our hierarchy, $\omega_1/\omega_3 = 10$, ensuring strong separation.
 
 \paragraph*{Bath correlation times.}
 We use two complementary definitions:
@@ -147,10 +151,10 @@ $\tau_B^{(\mathrm{eff})}$ weights spectral content by the system's gain and is w
 We use (i) baseband variance after I/Q demodulation via a 4th-order Butterworth low-pass around $f_3=\omega_3/2\pi$; (ii) narrowband PSD power over $[f_3(1-\beta),f_3(1+\beta)]$ (default $\beta=0.30$). Spectra are one-sided densities.
 
 \paragraph*{Classical control (\classS).}
-We compare OU input to its PSD-matched surrogate: preserve rFFT magnitudes, randomize phases (DC/Nyquist $=0$), inverse transform, restore the mean. Statistics are \emph{paired} across seeds. We adopt \emph{practical-equivalence} gates: \GateEQ{} at each $\Theta$. Paired Cohen's $d_z$ (effect size for paired comparisons, $d_z=t/\sqrt{n}$) and Holm-adjusted $p$ are \emph{reported} but \emph{not gated}. \emph{Normalization:} total variance equalized across $\Theta$; integrated power matched over $[\omega_{\mathrm{fast}}/\sqrt{10},\sqrt{10}\,\omega_{\mathrm{fast}}]$. \emph{Spectral estimation:} Welch's method with Hann window, 50\% overlap, segment length chosen to ensure $\ge 16$ segments per realization.
+We compare OU input to its PSD-matched surrogate: preserve rFFT magnitudes, randomize phases (DC/Nyquist $=0$), inverse transform, restore the mean. Statistics are \emph{paired} across seeds. We adopt \emph{practical-equivalence} gates: \GateEQ{} at each $\Theta$. \emph{Rationale for thresholds}: PSD-NRMSE$<$0.03 ensures spectral differences are below typical measurement noise in experimental setups (3\% is standard in calibration protocols); $|d_z|<$0.30 corresponds to Cohen's ``small'' effect size, ensuring detected differences are not just statistically significant but also practically negligible relative to the $\Theta$-dependence itself (which exhibits $d_z\!\sim\!1$--$2$ between MR band and boundaries). Paired Cohen's $d_z$ (effect size for paired comparisons, $d_z=t/\sqrt{n}$) and Holm-adjusted $p$ are \emph{reported} but \emph{not gated}. \emph{Normalization:} total variance equalized across $\Theta$; integrated power matched over $[\omega_{\mathrm{fast}}/\sqrt{10},\sqrt{10}\,\omega_{\mathrm{fast}}]$. \emph{Spectral estimation:} Welch's method with Hann window, 50\% overlap, segment length chosen to ensure $\ge 16$ segments per realization.
 
 \paragraph*{Quantum control (\classM).}
-We enforce \emph{equal-carrier}: hold $J(\omega_1)$ fixed while scanning $\kappa=1/\tau_B$. Calibration uses a Lorentzian ansatz with short refine; points failing $|\Delta J|/J^\star\le 0.02$ are rejected. We set the calibration bandwidth fraction to zero (\texttt{j\_bandwidth\_frac=0}) to ensure the bath spectral weight is concentrated exactly at $\omega_1$. Curves are computed with a Gaussian covariance solver (continuous Lyapunov equation). A trajectory engine is retained for \emph{parity} and matches within $10^{-3}$ at $\Theta=0.95$.
+We enforce \emph{equal-carrier}: hold $J(\omega_1)$ fixed while scanning $\kappa=1/\tau_B$. Calibration uses a Lorentzian ansatz with short refine; points failing $|\Delta J|/J^\star\le 0.02$ are rejected. We set the calibration bandwidth fraction to zero (\texttt{j\_bandwidth\_frac=0}) to ensure the bath spectral weight is concentrated exactly at $\omega_1$. Curves are computed with a Gaussian covariance solver (continuous Lyapunov equation): we solve $A\Sigma + \Sigma A^\dagger = -D$ for the steady-state covariance $\Sigma$, where $A$ is the drift matrix of the Gaussian master equation and $D$ is the diffusion matrix. \emph{Stability condition}: All eigenvalues of $A$ satisfy $\Re\lambda < 0$ (Lyapunov stability, ensures exponential relaxation to steady state); we enforce $\min\Re\lambda(A) < -10^{-6}$ as a numerical safety margin. A trajectory engine is retained for \emph{parity} and matches within $10^{-3}$ at $\Theta=0.95$.
 
 \paragraph*{Reproducibility and QA.}
 Each row carries a UTC timestamp, run UUID, solver, wallclock, and (quantum) $\min \Re \lambda(A)$ and SPD checks. A single consolidated CSV drives all figures (config hash \texttt{\confighash}). QA gates: stability + SPD (quantum), equal-carrier tolerance, and \GateEQ{} (classical).
@@ -184,6 +188,7 @@ If you \emph{cannot} tune $\tau_B$ directly: two-point dither with weights $[0.7
 
 \end{tcolorbox}
 
+\clearpage
 \section{Results}
 \subsection{Classical pillar (\classS): OU vs PSD-matched surrogate}
 Across $\Theta\in\{0.7,1.3,2.0\}$, OU and PSD-matched surrogates are practically equivalent under \GateEQ: PSD-NRMSE $=0.006$--$0.007$ and paired effect sizes $|d_z|=\{0.30,0.22,0.11\}$ (Holm $p=0.015$, reported but not gated). This is consistent with the classical $\Theta$-dependence arising from spectral overlap, as expected under standard spectral-overlap reasoning (Wiener--Khinchin).
@@ -216,6 +221,7 @@ Baseband and narrowband metrics agree in ordering across $\Theta$ (Fig.~\ref{fig
 \caption{\label{fig:robustness}\emph{Robustness.} Baseband vs narrowband consistency across $\Theta$; symbols preserve order (MR band shaded). \textbf{Estimator}: FFT-based power integration (baseband: full spectrum; narrowband: $[\omega_0-\Delta,\omega_0+\Delta]$). \textbf{Observed}: Both metrics peak in $[0.7,1.4]$, consistent with system-level property (not metric artefact). \textbf{Config}: \texttt{\confighash}.}
 \end{figure}
 
+\clearpage
 \section{Discussion: the \mrc as a synthesis and design guide}
 
 \paragraph*{Synthesis: a cross-scale pattern.}
@@ -235,8 +241,9 @@ The hierarchy used here is deliberately minimal; it validates the taxonomy and c
 \section*{Data, code, and reproducibility}
 All figures are generated from a single consolidated CSV (\texttt{results/theta\_sweep\_today.csv}) with manifests; plots embed config hash \texttt{\confighash}. Quantum stability/SPD checks and equal-carrier tolerances are enforced by the QA gate. Parity between covariance and trajectory engines matches within $10^{-3}$ at $\Theta=0.95$. See \texttt{results/production\_archive/QUICK\_REFERENCE.txt} for gate definitions and seeds. Figures generated by \texttt{figures/make\_fig*.py}, commit \texttt{\confighash}.
 
-\paragraph*{Data availability.} All simulation code, raw data (CSV), configuration manifests, and figure-generation scripts are available in the project repository. The consolidated dataset (\texttt{theta\_sweep\_today.csv}, 301~kB) and reproduction scripts (\texttt{figures/make\_fig*.py}) enable full regeneration of all results and figures from source.
+\paragraph*{Data availability.} All simulation code, raw data (CSV), configuration manifests, and figure-generation scripts are available in the project repository. The consolidated dataset (\texttt{theta\_sweep\_\allowbreak today.csv}, 301~kB) and reproduction scripts (\texttt{figures/\allowbreak make\_fig*.py}) enable full regeneration of all results and figures from source.
 
+\clearpage
 \section*{Supplement}
 
 \subsection*{Quality Assurance Gates}

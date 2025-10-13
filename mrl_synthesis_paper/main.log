@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  12 OCT 2025 21:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  13 OCT 2025 14:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1020,15 +1020,17 @@ vips/lm/lm-mathit.enc}]
 
 [2]
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 1
-12.
+13.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 
-[3{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{/usr/lo
-cal/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
+[3
+
+{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{/usr/loca
+l/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
-53.
+57.
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
@@ -1040,24 +1042,23 @@ Package microtype Info: Loading generic protrusion settings for font family
 
 
 [4]
-<figures/figA_classical.pdf, id=115, 469.755pt x 325.215pt>
-File: figures/figA_classical.pdf Graphic file (type pdf)
-<use figures/figA_classical.pdf>
-Package pdftex.def Info: figures/figA_classical.pdf  used on input line 195.
-(pdftex.def)             Requested size: 375.80544pt x 260.17235pt.
-
 
 [5]
+<figures/figA_classical.pdf, id=127, 469.755pt x 325.215pt>
+File: figures/figA_classical.pdf Graphic file (type pdf)
+<use figures/figA_classical.pdf>
+Package pdftex.def Info: figures/figA_classical.pdf  used on input line 200.
+(pdftex.def)             Requested size: 375.80544pt x 260.17235pt.
 <figures/figB_equal_carrier.pdf, id=128, 505.89pt x 325.215pt>
 File: figures/figB_equal_carrier.pdf Graphic file (type pdf)
 <use figures/figB_equal_carrier.pdf>
-Package pdftex.def Info: figures/figB_equal_carrier.pdf  used on input line 206
+Package pdftex.def Info: figures/figB_equal_carrier.pdf  used on input line 211
 .
 (pdftex.def)             Requested size: 375.80544pt x 241.59322pt.
 <figures/figC_robustness.pdf, id=130, 469.755pt x 361.35pt>
 File: figures/figC_robustness.pdf Graphic file (type pdf)
 <use figures/figC_robustness.pdf>
-Package pdftex.def Info: figures/figC_robustness.pdf  used on input line 215.
+Package pdftex.def Info: figures/figC_robustness.pdf  used on input line 220.
 (pdftex.def)             Requested size: 352.31625pt x 271.01184pt.
 
 
@@ -1065,36 +1066,34 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
 
-[6 <./figures/figA_classical.pdf>]
+[6
 
-[7 <./figures/figB_equal_carrier.pdf>]
+]
 
-[8 <./figures/figC_robustness.pdf>]
-Overfull \hbox (36.09612pt too wide) in paragraph at lines 238--239
-\T1/lmr/m/n/10.95 (-20) generation scripts are avail-able in the project repos-
-i-tory. The con-sol-i-dated dataset (\T1/lmtt/m/n/10.95 theta_sweep_today.csv\T
-1/lmr/m/n/10.95 (-20) ,
- []
+[7 <./figures/figA_classical.pdf>]
 
+[8 <./figures/figB_equal_carrier.pdf>]
 
-Underfull \hbox (badness 1527) in paragraph at lines 255--255
+[9 <./figures/figC_robustness.pdf>]
+
+[10
+
+]
+Underfull \hbox (badness 1527) in paragraph at lines 262--262
 []|$[] \OMS/lmsy/m/n/10.95 <\OML/lmm/m/it/10.95 ^^U\OT1/lmr/m/n/10.95 (+20) (\O
 ML/lmm/m/it/10.95 A\OT1/lmr/m/n/10.95 (+20) ) \OML/lmm/m/it/10.95 <
  []
 
 
-
-[9
-
-]
-
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
 
-[10] (./main.bbl)
+[11
 
-[11] (./main.aux)
+] (./main.bbl)
+
+[12] (./main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -1103,13 +1102,13 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 54C6340777ACA252196084A2CC1BBCF9;1982.
  ) 
 Here is how much of TeX's memory you used:
- 32193 strings out of 473190
- 663451 string characters out of 5715801
- 1043419 words of memory out of 5000000
+ 32205 strings out of 473190
+ 663581 string characters out of 5715801
+ 1042419 words of memory out of 5000000
  54627 multiletter control sequences out of 15000+600000
- 664468 words of font info for 247 fonts, out of 8000000 for 9000
+ 664930 words of font info for 252 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 98i,13n,105p,1755b,1062s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 98i,13n,105p,1755b,1037s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/lo
 cal/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texliv
 e/2025/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></usr/local/texlive/2025/te
@@ -1126,10 +1125,10 @@ lmri12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmsy10.pfb
 ></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/loca
 l/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/
 2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on main.pdf (11 pages, 400119 bytes).
+Output written on main.pdf (12 pages, 405179 bytes).
 PDF statistics:
- 436 PDF objects out of 1000 (max. 8388607)
- 232 compressed objects within 3 object streams
- 62 named destinations out of 1000 (max. 500000)
+ 441 PDF objects out of 1000 (max. 8388607)
+ 236 compressed objects within 3 object streams
+ 64 named destinations out of 1000 (max. 500000)
  53860 words of extra memory for PDF output out of 61914 (max. 10000000)
 
