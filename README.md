@@ -8,16 +8,16 @@ This repository contains the simulation code, data, and analysis for our paper o
 
 ---
 
-## 🎯 Quick Links
+## Quick Links
 
-- **📄 Paper:** [`mrl_synthesis_paper/main.pdf`](mrl_synthesis_paper/main.pdf) (390 KB, 11 pages)
-- **📊 Data:** [`results/theta_sweep_today.csv`](results/theta_sweep_today.csv) (301 KB consolidated dataset)
-- **📈 Figures:** [`figures/`](figures/) (3 publication-ready PDFs)
-- **✅ Status:** [`PAPER_STATUS.md`](PAPER_STATUS.md) (current version info)
+- **Paper:** [`mrl_synthesis_paper/main.pdf`](mrl_synthesis_paper/main.pdf) (390 KB, 11 pages)
+- **Data:** [`results/theta_sweep_today.csv`](results/theta_sweep_today.csv) (301 KB consolidated dataset)
+- **Figures:** [`figures/`](figures/) (3 publication-ready PDFs)
+- **Status:** [`PAPER_STATUS.md`](PAPER_STATUS.md) (current version info)
 
 ---
 
-## 🔬 What is the MRC?
+## What is the MRC?
 
 **Memory-Resonance Condition:** Systems often perform best when their environment's correlation time (τ_B) matches their fastest internal rhythm (1/ω_fast):
 
@@ -33,7 +33,7 @@ This repository contains the simulation code, data, and analysis for our paper o
 
 ---
 
-## 📂 Repository Structure
+## Repository Structure
 
 ```
 .
@@ -69,7 +69,7 @@ This repository contains the simulation code, data, and analysis for our paper o
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Setup Environment
 
@@ -111,7 +111,7 @@ python quick_diagnostic.py
 
 ---
 
-## 📊 Key Results
+## Key Results
 
 ### Classical Pillar (Class S - Spectral Overlap)
 
@@ -137,7 +137,7 @@ python quick_diagnostic.py
 
 ---
 
-## 🔧 Reproduce from Scratch
+## Reproduce from Scratch
 
 ### Classical Analysis (Long Run)
 
@@ -169,7 +169,7 @@ python quantum_hierarchy.py  # ~6 min
 
 ---
 
-## 📖 Paper Highlights
+## Paper Highlights
 
 ### Design Card (Actionable Guidance)
 
@@ -195,7 +195,7 @@ The paper synthesizes evidence from:
 
 ---
 
-## 📈 Data Availability
+## Data Availability
 
 All simulation code, raw data, configuration manifests, and figure-generation scripts are in this repository:
 
@@ -208,7 +208,7 @@ All simulation code, raw data, configuration manifests, and figure-generation sc
 
 ---
 
-## 🛠️ Advanced Usage
+## Advanced Usage
 
 ### Custom Parameter Sweeps
 
@@ -243,7 +243,7 @@ T = 100.0         # Default: 200.0
 
 ---
 
-## 📝 Citation
+## Citation
 
 If you use this code or data in your research, please cite:
 
@@ -260,7 +260,7 @@ If you use this code or data in your research, please cite:
 
 ---
 
-## 📞 Contact & Contributing
+## Contact & Contributing
 
 - **Issues:** [GitHub Issues](https://github.com/Mat-Tom-Son/memory-resonance/issues)
 - **Questions:** Open a discussion or email [mat.tom.son@protonmail.com](mailto:mat.tom.son@protonmail.com)
@@ -268,13 +268,13 @@ If you use this code or data in your research, please cite:
 
 ---
 
-## 📜 License
+## License
 
 This project is licensed under the MIT License - see [LICENSE](LICENSE) file for details.
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - [QuTiP](https://qutip.org/) for quantum simulation framework
 - All cited authors for cross-domain evidence synthesis
@@ -282,7 +282,7 @@ This project is licensed under the MIT License - see [LICENSE](LICENSE) file for
 
 ---
 
-## 📚 Additional Documentation
+## Additional Documentation
 
 - **Paper Status:** [`PAPER_STATUS.md`](PAPER_STATUS.md) - Current version, stats, checklist
 - **Submission Ready:** [`SUBMISSION_READY.md`](SUBMISSION_READY.md) - Final checks, talking points
