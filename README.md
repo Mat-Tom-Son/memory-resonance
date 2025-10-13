@@ -13,7 +13,6 @@ This repository contains the simulation code, data, and analysis for our paper o
 - **Paper:** [`mrl_synthesis_paper/main.pdf`](mrl_synthesis_paper/main.pdf) (390 KB, 11 pages)
 - **Data:** [`results/theta_sweep_today.csv`](results/theta_sweep_today.csv) (301 KB consolidated dataset)
 - **Figures:** [`figures/`](figures/) (3 publication-ready PDFs)
-- **Status:** [`PAPER_STATUS.md`](PAPER_STATUS.md) (current version info)
 
 ---
 
