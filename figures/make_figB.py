@@ -133,6 +133,7 @@ def build_plot(
     config_hash: str,
     psd_norm: str,
     deterministic: bool,
+    rows: list[dict[str, str]] = None,
 ) -> None:
     theta_vals = sorted(data.keys())
     means = []
@@ -164,28 +165,82 @@ def build_plot(
     if not deterministic:
         ax.fill_between(theta_arr, ci_low_arr, ci_high_arr, color="tab:purple", alpha=0.2)
 
-    for theta, mean_value, n_val in zip(theta_arr, mean_arr, n_counts):
-        ax.annotate(
-            f"N={n_val}",
-            (theta, mean_value),
-            textcoords="offset points",
-            xytext=(0, 8),
-            ha="center",
-            fontsize=9,
-            color="tab:purple",
-        )
+        # Add single N annotation if all counts are the same (only for stochastic)
+        if len(set(n_counts)) == 1:
+            ax.text(
+                0.02, 0.98,
+                f"N = {n_counts[0]} per point",
+                transform=ax.transAxes,
+                fontsize=9,
+                verticalalignment='top',
+                bbox=dict(boxstyle='round', facecolor='white', alpha=0.8, edgecolor='gray')
+            )
+        else:
+            # Only annotate points with different N
+            for theta, mean_value, n_val in zip(theta_arr, mean_arr, n_counts):
+                if n_val != n_counts[0]:  # Only label if different from first
+                    ax.annotate(
+                        f"N={n_val}",
+                        (theta, mean_value),
+                        textcoords="offset points",
+                        xytext=(0, 8),
+                        ha="center",
+                        fontsize=8,
+                        color="tab:purple",
+                        alpha=0.7
+                    )
 
-    counts_label = "N per Θ: " + ", ".join(f"{theta:.2f}={n}" for theta, n in zip(theta_arr, n_counts))
-    legend_handles, legend_labels = ax.get_legend_handles_labels()
-    legend_handles.append(Line2D([], [], color='none', label=counts_label))
-    legend_labels.append(counts_label)
-    ax.legend(legend_handles, legend_labels, loc="best")
+    # Clean legend without the long N-count string
+    ax.legend(loc="upper right", fontsize=9, framealpha=0.95)
 
-    ax.axhline(1.0, color="grey", linestyle="--", linewidth=1.0)
-    ax.set_xlabel(r"$\Theta = \omega_1 \tau_B$")
-    ax.set_ylabel("Baseband ratio")
-    ax.set_title("Equal-carrier sweep")
-    ax.grid(True, alpha=0.3)
+    # Add MR band shading (0.7-1.4)
+    ax.axvspan(0.7, 1.4, color='lightgray', alpha=0.25, zorder=0, label='MR band')
+    ax.axhline(1.0, color="grey", linestyle="--", linewidth=1.0, alpha=0.5, zorder=0)
+    ax.set_xlabel(r"$\Theta = \omega_1 \tau_B$", fontsize=11)
+    ax.set_ylabel("Baseband ratio", fontsize=11)
+    ax.set_title("Equal-carrier sweep", fontsize=12, pad=10)
+    ax.grid(True, alpha=0.3, zorder=0)
+
+    # Fix x-axis scientific notation issues
+    ax.ticklabel_format(style='plain', axis='x')
+    ax.xaxis.get_offset_text().set_visible(False)
+
+    # Set reasonable axis limits with padding
+    theta_range = theta_arr.max() - theta_arr.min()
+    ax.set_xlim(theta_arr.min() - 0.1 * theta_range, theta_arr.max() + 0.1 * theta_range)
+
+    # Add some padding to y-axis
+    y_range = mean_arr.max() - mean_arr.min()
+    y_pad = 0.15 * max(y_range, 0.1)  # At least 10% padding
+    ax.set_ylim(mean_arr.min() - y_pad, mean_arr.max() + y_pad)
+
+    # Add J(ω₁) inset to show equal-carrier enforcement
+    if rows:
+        jw1_rel_err = {}
+        for row in rows:
+            theta = _safe_float(row.get("theta"))
+            rel_err = _safe_float(row.get("rel_Jw1_err"))
+            if theta is not None and rel_err is not None:
+                if theta not in jw1_rel_err:
+                    jw1_rel_err[theta] = []
+                jw1_rel_err[theta].append(rel_err * 100)  # Convert to percentage
+
+        if jw1_rel_err:
+            inset_theta = sorted(jw1_rel_err.keys())
+            inset_err = [np.mean(jw1_rel_err[t]) for t in inset_theta]
+            if len(inset_err) > 0:
+                # Create inset axes (upper left corner)
+                axins = fig.add_axes([0.18, 0.60, 0.28, 0.25])
+                axins.plot(inset_theta, inset_err, marker='o', markersize=3, color='tab:green', linewidth=1)
+                axins.axhline(0, color='gray', linestyle='--', linewidth=0.8, alpha=0.5)
+                axins.axhline(2, color='red', linestyle=':', linewidth=0.8, alpha=0.5)
+                axins.axhline(-2, color='red', linestyle=':', linewidth=0.8, alpha=0.5)
+                axins.set_xlabel(r'$\Theta$', fontsize=8)
+                axins.set_ylabel(r'$\Delta J(\omega_1) / J^*$ (%)', fontsize=8)
+                axins.set_title('Equal-carrier check', fontsize=8, pad=3)
+                axins.grid(True, alpha=0.2)
+                axins.tick_params(labelsize=7)
+                print(f"[FIGB] J(ω₁) inset: mean |relative error| = {np.mean(np.abs(inset_err)):.2f}%", flush=True)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     metadata = {
@@ -215,7 +270,7 @@ def main() -> None:
         run_peak_vs_sides_tests(data)
     else:
         print("[FIGB] Gaussian solver detected – skipping statistical tests (analytic curve).", flush=True)
-    build_plot(data, counts, args.output, config_hash, psd_norm, deterministic)
+    build_plot(data, counts, args.output, config_hash, psd_norm, deterministic, rows=rows)
 
 
 if __name__ == "__main__":

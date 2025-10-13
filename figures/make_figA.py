@@ -142,11 +142,27 @@ def build_plot(stats: dict[str, dict[float, np.ndarray]], counts: dict[float, se
                 n_val = len(counts.get(theta, set()))
                 print(f"[FIGA] theta={theta:.3f} N_effective={n_val} condition=psd_matched", flush=True)
 
-    ax.axvline(1.0, color="grey", linestyle="--", linewidth=1.0)
+    # Add MR band shading (0.7-1.4)
+    ax.axvspan(0.7, 1.4, color='lightgray', alpha=0.25, zorder=0, label='MR band')
+    ax.axvline(1.0, color='grey', linestyle='--', linewidth=1.0, label='MR line')
     ax.set_xlabel(r"$\Theta = \omega_1 \tau_B$")
     ax.set_ylabel("Baseband power")
     ax.set_title("Classical OU vs PSD-matched surrogate")
     ax.grid(True, alpha=0.3)
+
+    # Fix y-axis scientific notation formatting - use proper TeX exponent
+    import matplotlib.ticker as ticker
+    def sci_notation(x, pos):
+        if x == 0:
+            return '0'
+        exp = int(np.floor(np.log10(abs(x))))
+        coeff = x / 10**exp
+        if abs(coeff - 1.0) < 1e-10:
+            return r'$10^{%d}$' % exp
+        return r'$%.1f \times 10^{%d}$' % (coeff, exp)
+
+    ax.yaxis.set_major_formatter(ticker.FuncFormatter(sci_notation))
+
     ax.legend()
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
