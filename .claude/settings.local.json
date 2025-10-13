@@ -27,7 +27,8 @@
       "Bash(pdfinfo:*)",
       "Bash(ls:*)",
       "Bash(/dev/null)",
-      "Read(//private/tmp/**)"
+      "Read(//private/tmp/**)",
+      "Bash(git remote set-url:*)"
     ],
     "deny": [],
     "ask": []
