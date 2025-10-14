@@ -190,6 +190,7 @@ def build_pseudomode_operators(
     nbar: float = 0.0,
     omega_c: float | None = None,
     nbar_pseudo: float | None = None,
+    kerr_fast: float = 0.0,
 ) -> dict[str, Qobj]:
     """
     Construct Hamiltonian/collapse operators for the pseudomode hierarchy.
@@ -215,6 +216,9 @@ def build_pseudomode_operators(
     H += g12 * (a1.dag() * a2 + a1 * a2.dag())
     H += g23 * (a2.dag() * a3 + a2 * a3.dag())
     H += g_pseudo * (a1.dag() * a_pseudo + a1 * a_pseudo.dag())
+    if kerr_fast:
+        kerr = float(kerr_fast)
+        H += 0.5 * kerr * a1.dag() * a1.dag() * a1 * a1
 
     c_ops: list[Qobj] = []
     if nbar > 0.0:
@@ -425,6 +429,7 @@ def run_pseudomode_model(
     nbar_pseudo: float | None = None,
     g_override: float | None = None,
     with_stats: bool = False,
+    kerr_fast: float = 0.0,
 ):
     """
     Simulate three oscillators with a pseudomode bath for non-Markovian dynamics.
@@ -456,6 +461,9 @@ def run_pseudomode_model(
     H += g12 * (a1.dag() * a2 + a1 * a2.dag())
     H += g23 * (a2.dag() * a3 + a2 * a3.dag())
     H += g_pseudo * (a1.dag() * a_pseudo + a1 * a_pseudo.dag())
+    if kerr_fast:
+        kerr = float(kerr_fast)
+        H += 0.5 * kerr * a1.dag() * a1.dag() * a1 * a1
 
     c_ops: list[Qobj] = []
     if nbar > 0.0:

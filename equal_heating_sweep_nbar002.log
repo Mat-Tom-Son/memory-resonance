@@ -1,0 +1,148 @@
+Starting equal_heating sweep for 14 theta values...
+Output directory: results/quantum_eqheat_sweep
+
+==================================================
+Running Θ = 0.3
+==================================================
+[RUN] run_id=94771bcb output_dir=results/quantum_eqheat_sweep_theta_0.30
+✓ Peak table saved to results/quantum_eqheat_sweep_theta_0.30/peak_table.csv
+[FIG] calibration=equal_heating psd_norm=onesided
+[FIG] calibration=equal_heating cutoff=4 N_effective=1
+✓ Figure saved to results/quantum_eqheat_sweep_theta_0.30/quantum_vs_classical_resonance.png
+✓ Completed Θ = 0.3
+
+==================================================
+Running Θ = 0.44
+==================================================
+[RUN] run_id=aec41c98 output_dir=results/quantum_eqheat_sweep_theta_0.44
+✓ Peak table saved to results/quantum_eqheat_sweep_theta_0.44/peak_table.csv
+[FIG] calibration=equal_heating psd_norm=onesided
+[FIG] calibration=equal_heating cutoff=4 N_effective=1
+✓ Figure saved to results/quantum_eqheat_sweep_theta_0.44/quantum_vs_classical_resonance.png
+✓ Completed Θ = 0.44
+
+==================================================
+Running Θ = 0.65
+==================================================
+[RUN] run_id=aa8ecf73 output_dir=results/quantum_eqheat_sweep_theta_0.65
+✓ Peak table saved to results/quantum_eqheat_sweep_theta_0.65/peak_table.csv
+[FIG] calibration=equal_heating psd_norm=onesided
+[FIG] calibration=equal_heating cutoff=4 N_effective=1
+✓ Figure saved to results/quantum_eqheat_sweep_theta_0.65/quantum_vs_classical_resonance.png
+✓ Completed Θ = 0.65
+
+==================================================
+Running Θ = 0.7
+==================================================
+[RUN] run_id=658c9110 output_dir=results/quantum_eqheat_sweep_theta_0.70
+✓ Peak table saved to results/quantum_eqheat_sweep_theta_0.70/peak_table.csv
+[FIG] calibration=equal_heating psd_norm=onesided
+[FIG] calibration=equal_heating cutoff=4 N_effective=1
+✓ Figure saved to results/quantum_eqheat_sweep_theta_0.70/quantum_vs_classical_resonance.png
+✓ Completed Θ = 0.7
+
+==================================================
+Running Θ = 0.8
+==================================================
+[RUN] run_id=823375e9 output_dir=results/quantum_eqheat_sweep_theta_0.80
+✓ Peak table saved to results/quantum_eqheat_sweep_theta_0.80/peak_table.csv
+[FIG] calibration=equal_heating psd_norm=onesided
+[FIG] calibration=equal_heating cutoff=4 N_effective=1
+✓ Figure saved to results/quantum_eqheat_sweep_theta_0.80/quantum_vs_classical_resonance.png
+✓ Completed Θ = 0.8
+
+==================================================
+Running Θ = 0.9
+==================================================
+[RUN] run_id=0335b2bf output_dir=results/quantum_eqheat_sweep_theta_0.90
+✓ Peak table saved to results/quantum_eqheat_sweep_theta_0.90/peak_table.csv
+[FIG] calibration=equal_heating psd_norm=onesided
+[FIG] calibration=equal_heating cutoff=4 N_effective=1
+✓ Figure saved to results/quantum_eqheat_sweep_theta_0.90/quantum_vs_classical_resonance.png
+✓ Completed Θ = 0.9
+
+==================================================
+Running Θ = 0.95
+==================================================
+[RUN] run_id=6f0e6192 output_dir=results/quantum_eqheat_sweep_theta_0.95
+✓ Peak table saved to results/quantum_eqheat_sweep_theta_0.95/peak_table.csv
+[FIG] calibration=equal_heating psd_norm=onesided
+[FIG] calibration=equal_heating cutoff=4 N_effective=1
+✓ Figure saved to results/quantum_eqheat_sweep_theta_0.95/quantum_vs_classical_resonance.png
+✓ Completed Θ = 0.95
+
+==================================================
+Running Θ = 1.0
+==================================================
+[RUN] run_id=4a6e9ea8 output_dir=results/quantum_eqheat_sweep_theta_1.00
+✓ Peak table saved to results/quantum_eqheat_sweep_theta_1.00/peak_table.csv
+[FIG] calibration=equal_heating psd_norm=onesided
+[FIG] calibration=equal_heating cutoff=4 N_effective=1
+✓ Figure saved to results/quantum_eqheat_sweep_theta_1.00/quantum_vs_classical_resonance.png
+✓ Completed Θ = 1.0
+
+==================================================
+Running Θ = 1.1
+==================================================
+[RUN] run_id=5ac4d76f output_dir=results/quantum_eqheat_sweep_theta_1.10
+✓ Peak table saved to results/quantum_eqheat_sweep_theta_1.10/peak_table.csv
+[FIG] calibration=equal_heating psd_norm=onesided
+[FIG] calibration=equal_heating cutoff=4 N_effective=1
+✓ Figure saved to results/quantum_eqheat_sweep_theta_1.10/quantum_vs_classical_resonance.png
+✓ Completed Θ = 1.1
+
+==================================================
+Running Θ = 1.2
+==================================================
+[RUN] run_id=1f1430a4 output_dir=results/quantum_eqheat_sweep_theta_1.20
+✓ Peak table saved to results/quantum_eqheat_sweep_theta_1.20/peak_table.csv
+[FIG] calibration=equal_heating psd_norm=onesided
+[FIG] calibration=equal_heating cutoff=4 N_effective=1
+✓ Figure saved to results/quantum_eqheat_sweep_theta_1.20/quantum_vs_classical_resonance.png
+✓ Completed Θ = 1.2
+
+==================================================
+Running Θ = 1.3
+==================================================
+[RUN] run_id=28f77823 output_dir=results/quantum_eqheat_sweep_theta_1.30
+✓ Peak table saved to results/quantum_eqheat_sweep_theta_1.30/peak_table.csv
+[FIG] calibration=equal_heating psd_norm=onesided
+[FIG] calibration=equal_heating cutoff=4 N_effective=1
+✓ Figure saved to results/quantum_eqheat_sweep_theta_1.30/quantum_vs_classical_resonance.png
+✓ Completed Θ = 1.3
+
+==================================================
+Running Θ = 1.39
+==================================================
+[RUN] run_id=e80bb751 output_dir=results/quantum_eqheat_sweep_theta_1.39
+✓ Peak table saved to results/quantum_eqheat_sweep_theta_1.39/peak_table.csv
+[FIG] calibration=equal_heating psd_norm=onesided
+[FIG] calibration=equal_heating cutoff=4 N_effective=1
+✓ Figure saved to results/quantum_eqheat_sweep_theta_1.39/quantum_vs_classical_resonance.png
+✓ Completed Θ = 1.39
+
+==================================================
+Running Θ = 2.04
+==================================================
+[RUN] run_id=a3717339 output_dir=results/quantum_eqheat_sweep_theta_2.04
+✓ Peak table saved to results/quantum_eqheat_sweep_theta_2.04/peak_table.csv
+[FIG] calibration=equal_heating psd_norm=onesided
+[FIG] calibration=equal_heating cutoff=4 N_effective=1
+✓ Figure saved to results/quantum_eqheat_sweep_theta_2.04/quantum_vs_classical_resonance.png
+✓ Completed Θ = 2.04
+
+==================================================
+Running Θ = 3.0
+==================================================
+[RUN] run_id=7bb5112c output_dir=results/quantum_eqheat_sweep_theta_3.00
+✓ Peak table saved to results/quantum_eqheat_sweep_theta_3.00/peak_table.csv
+[FIG] calibration=equal_heating psd_norm=onesided
+[FIG] calibration=equal_heating cutoff=4 N_effective=1
+✓ Figure saved to results/quantum_eqheat_sweep_theta_3.00/quantum_vs_classical_resonance.png
+✓ Completed Θ = 3.0
+
+==================================================
+All runs complete! Consolidating results...
+==================================================
+Consolidated results saved to: results/quantum_eqheat_sweep_consolidated.csv
+Total lines:       29

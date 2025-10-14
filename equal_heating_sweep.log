@@ -1,0 +1,15 @@
+Starting equal_heating sweep for 14 theta values...
+Output directory: results/quantum_eqheat_sweep
+
+==================================================
+Running Θ = 0.3
+==================================================
+[RUN] run_id=6961df25 output_dir=results/quantum_eqheat_sweep_theta_0.30
+Traceback (most recent call last):
+  File "/Users/matthompson/Documents/dev/warm-noise-proxy/stage3_parameter_sweep.py", line 1901, in <module>
+    main()
+  File "/Users/matthompson/Documents/dev/warm-noise-proxy/stage3_parameter_sweep.py", line 1842, in main
+    results = run_gaussian_sweep(
+  File "/Users/matthompson/Documents/dev/warm-noise-proxy/stage3_parameter_sweep.py", line 1228, in run_gaussian_sweep
+    raise RuntimeError(
+RuntimeError: Tolerance failure for Θ=0.300, seed=-1: rel_occ_err

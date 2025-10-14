@@ -10,9 +10,9 @@ This repository contains the simulation code, data, and analysis for our paper o
 
 ## Quick Links
 
-- **Paper:** [`mrl_synthesis_paper/main.pdf`](mrl_synthesis_paper/main.pdf) (390 KB, 11 pages)
-- **Data:** [`results/theta_sweep_today.csv`](results/theta_sweep_today.csv) (301 KB consolidated dataset)
-- **Figures:** [`figures/`](figures/) (3 publication-ready PDFs)
+- **Paper:** [`mrl_synthesis_paper/main.pdf`](mrl_synthesis_paper/main.pdf) (latest build)
+- **Data:** Core CSVs: `results/theta_sweep_today.csv` (Class S), `results/classical_parametric_mod03.csv` (Class C), `results/quantum_nonlin/kerr02_tol001.csv` (Class M), `results/quantum_nonlin/kerr00_tol001.csv` (quantum surrogate), `results/quantum_eqheat_sweep_for_figB.csv` (quantum null)
+- **Figures:** [`figures/`](figures/) (scripts + PDFs for all panels)
 
 ---
 
@@ -28,7 +28,7 @@ This repository contains the simulation code, data, and analysis for our paper o
 - **Class C (Coherent):** Weak nonlinearity reweights spectra
 - **Class M (Memory):** Time-nonlocal dynamical kernels
 
-**Our Contribution:** We formalize this cross-domain pattern, provide operational diagnostics to classify mechanism, and validate with rigorous controls across the classical/quantum divide.
+**Our Contribution:** We formalize this cross-domain pattern, provide operational diagnostics to classify mechanism, and apply them to a minimal hierarchy—confirming the classical mechanism while documenting where the quantum diagnostic returns a null.
 
 ---
 
@@ -42,12 +42,18 @@ This repository contains the simulation code, data, and analysis for our paper o
 │   └── references.bib            # Bibliography
 │
 ├── figures/                      # Figure generation scripts
-│   ├── make_figA.py             # Classical pillar (OU vs surrogate)
-│   ├── make_figB.py             # Quantum pillar (equal-carrier scan)
-│   ├── make_figC.py             # Robustness (metric consistency)
-│   ├── figA_classical.pdf       # Generated figure A
-│   ├── figB_equal_carrier.pdf   # Generated figure B
-│   └── figC_robustness.pdf      # Generated figure C
+│   ├── make_figA.py             # Classical Class S (OU ≈ surrogate)
+│   ├── make_figB.py             # Quantum linear equal-carrier (null)
+│   ├── make_figC.py             # Robustness across metrics
+│   ├── make_figD_parametric.py  # Classical Class C (parametric modulation)
+│   ├── make_figE_collapse.py    # Cross-domain collapse onto Θ
+│   ├── make_figF_quantum_nonlin.py # Quantum Class M (detune + Kerr)
+│   ├── figA_classical.pdf
+│   ├── figB_equal_carrier.pdf
+│   ├── figC_robustness.pdf
+│   ├── figD_parametric_classC.pdf
+│   ├── figE_collapse.pdf
+│   └── figF_quantum_nonlin.pdf
 │
 ├── results/                      # Simulation data and manifests
 │   ├── theta_sweep_today.csv    # Consolidated dataset (301 KB)
@@ -89,14 +95,17 @@ pip install -r requirements.txt
 ### 2. Reproduce Paper Figures
 
 ```bash
-# Regenerate all three figures from consolidated data
+# Regenerate all figures from consolidated data
 cd figures
-PYTHONPATH=.. python make_figA.py  # Classical pillar (~5 sec)
-PYTHONPATH=.. python make_figB.py  # Quantum pillar (~5 sec)
-PYTHONPATH=.. python make_figC.py  # Robustness (~5 sec)
+PYTHONPATH=.. python make_figA.py              # Classical Class S (~5 sec)
+PYTHONPATH=.. python make_figD_parametric.py   # Classical Class C (~8 sec)
+PYTHONPATH=.. python make_figF_quantum_nonlin.py # Quantum Class M (~8 sec)
+PYTHONPATH=.. python make_figB.py              # Quantum null (~5 sec)
+PYTHONPATH=.. python make_figE_collapse.py     # Cross-domain collapse (~3 sec)
+PYTHONPATH=.. python make_figC.py              # Robustness (~5 sec)
 ```
 
-**Output:** `figA_classical.pdf`, `figB_equal_carrier.pdf`, `figC_robustness.pdf`
+**Output:** `figA_classical.pdf`, `figD_parametric_classC.pdf`, `figF_quantum_nonlin.pdf`, `figB_equal_carrier.pdf`, `figE_collapse.pdf`, `figC_robustness.pdf`
 
 ### 3. Run Tests
 
@@ -114,8 +123,12 @@ python quick_diagnostic.py
 
 To quickly verify the paper's claims:
 
-1. **Check the data**: `cat results/theta_sweep_today.csv | head`
-2. **Regenerate Figure 1**: `cd figures && PYTHONPATH=.. python make_figA.py` (~5 sec)
+1. **Check the data**:
+   - `head results/theta_sweep_today.csv` (Class S)
+   - `head results/classical_parametric_mod03.csv` (Class C) plus `head results/classical_parametric_mod00.csv` (no-modulation control)
+   - `head results/quantum_nonlin/kerr02_tol001.csv` (Class M), `head results/quantum_nonlin/kerr00_tol001.csv` (linear detuned control), `head results/quantum_nonlin/kerr02_tol001_neg.csv` (negative detuning)
+   - `head results/quantum_eqheat_sweep_for_figB.csv` (quantum null)
+2. **Regenerate figures**: `cd figures` and run `PYTHONPATH=.. python make_figA.py`, `PYTHONPATH=.. python make_figD_parametric.py`, `PYTHONPATH=.. python make_figF_quantum_nonlin.py`, `PYTHONPATH=.. python make_figB.py`, `PYTHONPATH=.. python make_figE_collapse.py`, `PYTHONPATH=.. python make_figC.py`
 3. **Run validation suite**: `pytest tests/test_quantum_hierarchy.py -v` (~20 sec)
 4. **Config hash verification**: All figures embed `c7dc5aa1` - grep for it in the PDF or check figure captions
 
@@ -130,9 +143,9 @@ We **do not** claim novelty of the Θ≈1 phenomenon itself (it appears across s
 **Our contribution:**
 - **Pattern recognition**: Formalizing the cross-domain recurrence as a unified Memory-Resonance Condition
 - **Mechanism taxonomy**: Classes S/C/M with operational diagnostics to distinguish spectral overlap, coherent modulation, and memory backaction
-- **Falsifiable tests**: PSD-matched surrogate (tests Class S), equal-carrier scan (tests Class M)
-- **Rigorous validation**: Pre-registered gates (PSD-NRMSE < 0.03, |d_z| < 0.30, |ΔJ|/J* ≤ 0.02) across classical/quantum divide
-- **Actionable design rule**: Boxed Design Card with step-by-step guidance for practitioners
+- **Falsifiable tests in practice**: Class S replication (OU ≈ surrogate), a parametric modulation run that breaks the PSD gate (Class C), and a detuned Kerr equal-carrier sweep that yields a quantum enhancement (Class M) alongside the linear null
+- **Rigorous validation + boundaries**: Pre-registered gates reported for all sweeps (PSD-NRMSE, |d_z|, |95J|/J*), highlighting where the diagnostics pass, fail, or mark the edge of applicability
+- **Actionable design rule**: Boxed Design Card with step-by-step guidance and shared CSVs for immediate reuse
 
 ---
 
@@ -142,10 +155,12 @@ We **do not** claim novelty of the Θ≈1 phenomenon itself (it appears across s
 
 | Pillar | Mechanism | Gate | Threshold | Observed | Status |
 |--------|-----------|------|-----------|----------|--------|
-| Classical | Spectral overlap | PSD-NRMSE | < 0.03 | 0.006-0.007 | ✓ Pass |
-| Classical | Spectral overlap | \|d_z\| | < 0.30 | 0.11-0.30 | ✓ Pass |
-| Quantum | Memory backaction | \|ΔJ\|/J* | ≤ 0.02 | < 0.02 | ✓ Pass |
-| Both | Robustness | Metric consistency | - | Baseband ≈ Narrowband | ✓ Pass |
+| Classical | Spectral overlap (Class S) | PSD-NRMSE | < 0.03 | 0.006–0.007 | ✓ Pass |
+| Classical | Coherent modulation (Class C) | PSD-NRMSE | – | 1.08–2.13 | ✗ Surrogate fails |
+| Classical | Coherent modulation (Class C) | \|d_z\| | – | ≈0.20 | ✗ Surrogate fails |
+| Quantum | Memory backaction (Class M) | \|ΔJ\|/J* | ≤ 0.02 | ≤ 1e-3 | ✓ Pass (peak R_env ≈ 1.07) |
+| Quantum | Linear boundary | \|ΔJ\|/J* | ≤ 0.02 | < 0.02 | ✓ Pass (R_env ≈ 1.00) |
+| All | Robustness | Metric consistency | - | Baseband ≈ Narrowband | ✓ Pass |
 
 ### Classical Pillar (Class S - Spectral Overlap)
 
@@ -155,13 +170,15 @@ We **do not** claim novelty of the Θ≈1 phenomenon itself (it appears across s
 
 **Interpretation:** Classical Θ-dependence arises from spectral overlap (Wiener-Khinchin), consistent with stochastic resonance literature.
 
-### Quantum Pillar (Class M - Memory Backaction)
+### Classical Coherent Modulation (Class C)
 
-**Finding:** Equal-carrier scans retain Θ≈1 structure despite fixed spectral weight at ω₁.
+**Finding:** A weakly modulated coupling yields a Θ-band optimum ($R_{\mathrm{env}}\approx 1.31$ at Θ ≈ 1.1) even though the PSD-matched surrogate stays near unity; PSD-NRMSE $>1$ violates the spectral-overlap gate.
 
-**Gate:** |ΔJ|/J* ≤ 0.02 ✓
+### Quantum Probes (Class M)
 
-**Interpretation:** Residual Θ-structure with controlled spectral weight confirms memory backaction mechanism, transcending the classical/quantum divide.
+- **Detuned Kerr sweep:** Equal-carrier calibration at the operating amplitude ($|ΔJ|/J^*|≤10^{-3}$) yields a shallow peak at Θ ≈ 1.1 (R_env ≈ 1.07); auxiliary metrics agree and the fast-mode occupancy remains ≈2×10⁻².
+- **Detuned linear surrogate:** With Kerr set to zero the equal-carrier curve stays flat (R_env ≤ 1.06), demonstrating that mild nonlinearity is essential for the enhancement.
+- **Linear-Gaussian null:** Without detuning the original hierarchy returns R_env ≈ 1 for all Θ, marking the boundary of the minimal hierarchy.
 
 ### Robustness
 
@@ -183,6 +200,13 @@ python hierarchical_analysis.py  # ~20 minutes, 25 Θ points × 16 seeds
 # - experiment1_equal_variance.png
 # - experiment2_sweep_equal_variance.png
 # - Terminal: Bootstrap CI on Θ peak
+
+# Class C parametric modulation sweep
+python classical_parametric_sweep.py --output results/classical_parametric_mod03.csv --mod-amp 0.3 --n-seeds 6
+PYTHONPATH=. python figures/make_figD_parametric.py
+
+# (Optional) no-modulation control for collapse/checks
+python classical_parametric_sweep.py --output results/classical_parametric_mod00.csv --mod-amp 0.0 --n-seeds 6
 ```
 
 ### Quantum Hierarchy
@@ -199,6 +223,12 @@ python stage3_parameter_sweep.py  # ~5 min
 
 # Or run complete pipeline:
 python quantum_hierarchy.py  # ~6 min
+
+# Class M (detuned + Kerr) vs surrogate
+python quantum_nonlin_sweep.py --output results/quantum_nonlin/kerr02_tol001.csv --detune-frac 0.1 --kerr-fast 0.02 --equal-carrier-tol 0.001 --theta-list 0.6 0.8 1.0 1.1 1.2 1.3 1.4
+python quantum_nonlin_sweep.py --output results/quantum_nonlin/kerr00_tol001.csv --detune-frac 0.1 --kerr-fast 0.0 --equal-carrier-tol 0.001 --theta-list 0.6 0.8 1.0 1.1 1.2 1.3 1.4
+python quantum_nonlin_sweep.py --output results/quantum_nonlin/kerr02_tol001_neg.csv --detune-frac -0.1 --kerr-fast 0.02 --equal-carrier-tol 0.001 --theta-list 0.6 0.8 1.0 1.1 1.2 1.3 1.4
+PYTHONPATH=. python figures/make_figF_quantum_nonlin.py
 ```
 
 ---
@@ -358,4 +388,3 @@ This project is licensed under the MIT License - see [LICENSE](LICENSE) file for
 **Status:** Preprint ready for submission (2025-10-12)
 
 **Config hash:** c7dc5aa1 | **PDF:** 390 KB, 11 pages | **Data:** 301 KB CSV
-

@@ -28,7 +28,13 @@
       "Bash(ls:*)",
       "Bash(/dev/null)",
       "Read(//private/tmp/**)",
-      "Bash(git remote set-url:*)"
+      "Bash(git remote set-url:*)",
+      "Bash(python:*)",
+      "Bash(find:*)",
+      "Bash(sort:*)",
+      "Bash(chmod:*)",
+      "Bash(./run_equal_heating_sweep.sh:*)",
+      "Bash(tee:*)"
     ],
     "deny": [],
     "ask": []

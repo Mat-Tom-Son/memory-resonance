@@ -95,6 +95,8 @@ def run_hierarchy(
     seed: int | None = None,
     noise_override: np.ndarray | None = None,
     return_noise: bool = False,
+    g12_modulation: callable | None = None,
+    g23_modulation: callable | None = None,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray] | tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """
     Three weakly coupled oscillators driven by a calibrated OU bath.
@@ -103,7 +105,7 @@ def run_hierarchy(
         np.random.seed(seed)
 
     w1, w2, w3 = W1, W2, W3
-    g12, g23 = G12, G23
+    g12_base, g23_base = G12, G23
     gamma1, gamma2, gamma3 = GAMMA1, GAMMA2, GAMMA3
 
     if calibration_mode == "equal_variance":
@@ -122,31 +124,33 @@ def run_hierarchy(
     else:
         xi = ou_process_exact(T, dt, tau_B, target_variance=target_var, seed=seed)
 
+    times = np.arange(n_steps, dtype=float) * dt
     x1, v1 = np.zeros(n_steps), np.zeros(n_steps)
     x2, v2 = np.zeros(n_steps), np.zeros(n_steps)
     x3, v3 = np.zeros(n_steps), np.zeros(n_steps)
 
     for i in range(n_steps - 1):
-        a1 = -2 * gamma1 * v1[i] - w1**2 * x1[i] + g12 * (x2[i] - x1[i]) + xi[i]
+        g12_curr = g12_modulation(times[i]) if g12_modulation is not None else g12_base
+        g23_curr = g23_modulation(times[i]) if g23_modulation is not None else g23_base
+
+        a1 = -2 * gamma1 * v1[i] - w1**2 * x1[i] + g12_curr * (x2[i] - x1[i]) + xi[i]
         v1[i + 1] = v1[i] + a1 * dt
         x1[i + 1] = x1[i] + v1[i + 1] * dt
 
         a2 = (
             -2 * gamma2 * v2[i]
             - w2**2 * x2[i]
-            + g12 * (x1[i] - x2[i])
-            + g23 * (x3[i] - x2[i])
+            + g12_curr * (x1[i] - x2[i])
+            + g23_curr * (x3[i] - x2[i])
         )
         v2[i + 1] = v2[i] + a2 * dt
         x2[i + 1] = x2[i] + v2[i + 1] * dt
 
-        a3 = -2 * gamma3 * v3[i] - w3**2 * x3[i] + g23 * (x2[i] - x3[i])
+        a3 = -2 * gamma3 * v3[i] - w3**2 * x3[i] + g23_curr * (x2[i] - x3[i])
         v3[i + 1] = v3[i] + a3 * dt
         x3[i + 1] = x3[i] + v3[i + 1] * dt
 
     burn_idx = int(burn_in_fraction * n_steps)
-    times = np.arange(n_steps) * dt
-
     results = (times[burn_idx:], x1[burn_idx:], x2[burn_idx:], x3[burn_idx:])
     if return_noise:
         return (*results, xi[burn_idx:].copy())
