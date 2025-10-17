@@ -61,7 +61,7 @@ def main() -> None:
     theta_null, ratio_null = load_quantum_null(args.quantum_null)
 
     fig, ax = plt.subplots(figsize=(7, 4.5))
-    ax.fill_between([0.7, 1.4], 0, 2.2, color="lightgray", alpha=0.2, zorder=0)
+    ax.axvspan(0.7, 1.4, color="#d9d9d9", alpha=0.35, zorder=0)
 
     ax.plot(theta_s, ratio_s, marker="o", color="tab:blue", label="Class S (OU baseline)")
     ax.errorbar(theta_c, ratio_c, yerr=sem_c, marker="s", color="tab:orange", label="Class C (parametric)")
@@ -78,6 +78,26 @@ def main() -> None:
     ax.grid(True, alpha=0.3)
     ax.legend(loc="upper left")
     ax.set_title("Cross-domain collapse onto the MRC band")
+
+    def annotate_class(theta: np.ndarray, values: np.ndarray, text: str, color: str, dy: float = 0.015) -> None:
+        if theta.size == 0 or values.size == 0:
+            return
+        idx = int(np.nanargmin(np.abs(theta - 1.0)))
+        ax.text(
+            theta[idx] + 0.03,
+            values[idx] * (1.0 + dy),
+            text,
+            color=color,
+            fontsize=12,
+            fontweight="bold",
+            ha="left",
+            va="bottom",
+        )
+
+    annotate_class(theta_s, ratio_s, "Class S", "tab:blue")
+    annotate_class(theta_c, ratio_c, "Class C", "tab:orange", dy=0.03)
+    annotate_class(theta_q, ratio_q, "Class M", "tab:purple")
+    annotate_class(theta_null, ratio_null, "Class M (null)", "tab:gray", dy=0.01)
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     fig.tight_layout()

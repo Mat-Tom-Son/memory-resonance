@@ -10,6 +10,7 @@ import csv
 import math
 from pathlib import Path
 from typing import Iterable
+import time
 
 import numpy as np
 from tqdm import tqdm
@@ -115,6 +116,8 @@ def sweep(args: argparse.Namespace) -> list[dict[str, float]]:
     base_n1 = rolling_mean(n3_markov[burn_idx:])
 
     rows: list[dict[str, float]] = []
+    start_time = time.time()
+    patience_counter = 0
     for theta in tqdm(thetas, desc="Theta sweep"):
         tau_B = float(theta / W1)
         kappa = 1.0 / tau_B
@@ -193,6 +196,26 @@ def sweep(args: argparse.Namespace) -> list[dict[str, float]]:
                 "detune_frac": args.detune_frac,
             }
         )
+
+        # Early-stop logic: optional runtime and efficacy gates
+        if getattr(args, "early_stop", False):
+            scanned = len(rows)
+            best_r = max([r.get("R_env", float("nan")) for r in rows])
+            if scanned >= getattr(args, "early_min_theta", 3):
+                if not np.isfinite(best_r) or best_r < getattr(args, "early_threshold", 1.08):
+                    patience_counter += 1
+                else:
+                    patience_counter = 0
+                if patience_counter > getattr(args, "early_patience", 1):
+                    print(
+                        f"Early stop: best R_env={best_r:.3f} below threshold "
+                        f"{getattr(args, 'early_threshold', 1.08):.3f} after {scanned} points."
+                    )
+                    break
+            max_rt = getattr(args, "max_runtime_s", None)
+            if max_rt is not None and (time.time() - start_time) > float(max_rt):
+                print(f"Early stop: exceeded runtime budget {max_rt}s after {scanned} points.")
+                break
     return rows
 
 
@@ -233,6 +256,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--nbar", type=float, default=0.0)
     parser.add_argument("--a1-init-alpha", type=float, default=0.0)
     parser.add_argument("--seed", type=int, help="Not used but kept for interface symmetry")
+    # Early-stop controls
+    parser.add_argument("--early-stop", action="store_true", help="Enable early termination if lift is not promising")
+    parser.add_argument("--early-threshold", type=float, default=1.08, help="Minimum R_env target to keep scanning")
+    parser.add_argument("--early-min-theta", type=int, default=3, help="Minimum Θ points before early-stop checks")
+    parser.add_argument("--early-patience", type=int, default=1, help="Allowed consecutive misses below threshold")
+    parser.add_argument("--max-runtime-s", type=float, help="Optional wall-clock budget (seconds)")
     return parser.parse_args()
 
 

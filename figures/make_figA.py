@@ -143,12 +143,28 @@ def build_plot(stats: dict[str, dict[float, np.ndarray]], counts: dict[float, se
                 print(f"[FIGA] theta={theta:.3f} N_effective={n_val} condition=psd_matched", flush=True)
 
     # Add MR band shading (0.7-1.4)
-    ax.axvspan(0.7, 1.4, color='lightgray', alpha=0.25, zorder=0, label='MR band')
+    ax.axvspan(0.7, 1.4, color="#d9d9d9", alpha=0.35, zorder=0)
     ax.axvline(1.0, color='grey', linestyle='--', linewidth=1.0, label='MR line')
     ax.set_xlabel(r"$\Theta = \omega_1 \tau_B$")
     ax.set_ylabel("Baseband power")
     ax.set_title("Classical OU vs PSD-matched surrogate")
     ax.grid(True, alpha=0.3)
+
+    # Annotate class label near OU curve
+    if "ou" in stats:
+        theta_mid = min(stats["ou"], key=lambda t: abs(t - 1.0))
+        y_samples = stats["ou"][theta_mid]
+        y_mid = float(np.mean(y_samples))
+        ax.text(
+            theta_mid + 0.05,
+            y_mid * 1.08,
+            "Class S",
+            color="tab:blue",
+            fontsize=12,
+            fontweight="bold",
+            ha="left",
+            va="center",
+        )
 
     # Fix y-axis scientific notation formatting - use proper TeX exponent
     import matplotlib.ticker as ticker

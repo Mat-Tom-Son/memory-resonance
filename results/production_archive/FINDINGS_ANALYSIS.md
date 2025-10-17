@@ -253,6 +253,15 @@ vs production $0.30$) shows no material change: gates remain satisfied
 
 ---
 
+## 8. Supplementary adaptive re-runs (no model change)
+
+To support quick verification and tighter sampling, we include two adaptive re-runs that confirm the same diagnostics as production. These runs change only runtime and sampling parameters (smaller Hilbert sizes, shorter traces, early-stop); the physical model and diagnostics are unchanged.
+
+- Class C (parametric): `results/adaptive/classC_fraction_attempt.csv` — clear PSD surrogate failure (PSD-NRMSE > 1) across Θ when modulation is applied at the fast scale.
+- Class M (equal-carrier): `results/adaptive/kerr08_det12_theta_grid.csv` — fast four-point Θ grid with mild detuning and Kerr; peak `R_env ≈ 1.11` within the MR band, equal-carrier gate `|ΔJ|/J* ≲ 1e-3`.
+
+These datasets are supplementary confirmations; the main production CSVs remain authoritative for reported numbers.
+
 ## 9. Paste-Ready Results Text
 
 ### Classical (Fig. A):

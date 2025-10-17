@@ -7,6 +7,7 @@ import csv
 import math
 from pathlib import Path
 from typing import Sequence
+import time
 
 import numpy as np
 from tqdm import tqdm
@@ -45,6 +46,8 @@ def sweep(args: argparse.Namespace) -> list[dict[str, float]]:
 
     rows: list[dict[str, float]] = []
     baseline_value = None
+    start_time = time.time()
+    patience_counter = 0
 
     for theta in tqdm(thetas, desc="Theta"):
         tau_B = theta / W1
@@ -135,6 +138,32 @@ def sweep(args: argparse.Namespace) -> list[dict[str, float]]:
                 "cohen_dz": (np.mean(band_diff) / np.std(band_diff, ddof=1)) if len(band_diff) > 1 else float("nan"),
             }
         )
+        # Early-stop logic: look for strong surrogate fail and band separation
+        if getattr(args, "early_stop", False):
+            scanned = len(rows)
+            max_psd = max([r.get("psd_nrmse", 0.0) for r in rows])
+            max_gap = max([
+                (r.get("band_ratio", float("nan")) - r.get("band_ratio_surrogate", float("nan")))
+                for r in rows
+            ])
+            # Treat non-finite gaps as zero for gating
+            if not np.isfinite(max_gap):
+                max_gap = 0.0
+            good = (max_psd >= getattr(args, "early_psd_threshold", 0.8)) or (max_gap >= getattr(args, "early_gap_threshold", 0.2))
+            if scanned >= getattr(args, "early_min_theta", 3):
+                if not good:
+                    patience_counter += 1
+                else:
+                    patience_counter = 0
+                if patience_counter > getattr(args, "early_patience", 1):
+                    print(
+                        f"Early stop: psd_nrmse(max)={max_psd:.2f}, gap(max)={max_gap:.2f} below thresholds; scanned {scanned} points."
+                    )
+                    break
+            max_rt = getattr(args, "max_runtime_s", None)
+            if max_rt is not None and (time.time() - start_time) > float(max_rt):
+                print(f"Early stop: exceeded runtime budget {max_rt}s after {scanned} points.")
+                break
     return rows
 
 
@@ -156,6 +185,13 @@ def main() -> None:
     parser.add_argument("--mod-amp", type=float, default=0.15)
     parser.add_argument("--mod-omega", type=float, default=1.0, help="Modulation frequency multiplier or absolute (see mod-units)")
     parser.add_argument("--mod-units", choices=["fraction", "absolute"], default="fraction")
+    # Early-stop controls
+    parser.add_argument("--early-stop", action="store_true", help="Enable early termination if surrogate does not fail clearly")
+    parser.add_argument("--early-psd-threshold", type=float, default=0.8, help="PSD-NRMSE threshold indicating surrogate failure")
+    parser.add_argument("--early-gap-threshold", type=float, default=0.2, help="Minimum band ratio gap OU - surrogate")
+    parser.add_argument("--early-min-theta", type=int, default=3, help="Minimum Θ points before early-stop checks")
+    parser.add_argument("--early-patience", type=int, default=1, help="Allowed consecutive misses below thresholds")
+    parser.add_argument("--max-runtime-s", type=float, help="Optional wall-clock budget (seconds)")
     args = parser.parse_args()
 
     rows = sweep(args)

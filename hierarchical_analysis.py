@@ -70,6 +70,66 @@ def ou_process_exact(
     return xi
 
 
+def ou_process_biexp(
+    T: float,
+    dt: float,
+    tau_list: Sequence[float],
+    weights: Sequence[float],
+    target_variance: float = 1.0,
+    seed: int | None = None,
+) -> np.ndarray:
+    """
+    Two-component OU mixture via AR(1) superposition.
+    Produces xi = sum_i w_i xi_i with independent OU components.
+    """
+    if seed is not None:
+        np.random.seed(seed)
+    ws = np.asarray(weights, dtype=float)
+    taus = np.asarray(tau_list, dtype=float)
+    if ws.size != taus.size:
+        raise ValueError("weights and tau_list must match in length")
+    if np.any(taus <= 0) or np.any(ws < 0):
+        raise ValueError("invalid taus or weights")
+    ws = ws / max(1e-12, ws.sum())
+    n_steps = int(T / dt)
+    xi = np.zeros(n_steps)
+    for w, tB in zip(ws, taus):
+        comp = ou_process_exact(T, dt, float(tB), target_variance=target_variance, seed=None)
+        xi += w * comp
+    # Re-scale to target variance
+    v = np.var(xi)
+    if v > 0:
+        xi = xi * np.sqrt(target_variance / v)
+    return xi
+
+
+def ou_process_delayed(
+    T: float,
+    dt: float,
+    tau_B: float,
+    delay: float,
+    target_variance: float = 1.0,
+    seed: int | None = None,
+) -> np.ndarray:
+    """
+    OU process convolved with a narrow delay kernel δ(τ-τ_d):
+    approximated here by shifting and mixing a small fraction of xi with xi delayed.
+    """
+    base = ou_process_exact(T, dt, tau_B, target_variance=target_variance, seed=seed)
+    k = int(round(max(0.0, delay) / dt))
+    if k <= 0:
+        return base
+    delayed = np.zeros_like(base)
+    delayed[k:] = base[:-k]
+    # small mix to avoid instability; keep variance
+    mix = 0.2
+    y = (1 - mix) * base + mix * delayed
+    v = np.var(y)
+    if v > 0:
+        y = y * np.sqrt(target_variance / v)
+    return y
+
+
 def calibrate_variance_for_carrier_power(
     tau_B: float,
     S_target: float,
@@ -97,6 +157,8 @@ def run_hierarchy(
     return_noise: bool = False,
     g12_modulation: callable | None = None,
     g23_modulation: callable | None = None,
+    alpha_feedback: float = 0.0,
+    tau_lp: float = 0.0,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray] | tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """
     Three weakly coupled oscillators driven by a calibrated OU bath.
@@ -129,11 +191,22 @@ def run_hierarchy(
     x2, v2 = np.zeros(n_steps), np.zeros(n_steps)
     x3, v3 = np.zeros(n_steps), np.zeros(n_steps)
 
+    # Optional weak feedback path: xi <- xi + alpha * LPF(x3)
+    # One-pole LP on x3 with time constant tau_lp (if provided)
+    lp = 0.0
+    lp_alpha = float(alpha_feedback)
+    lp_coeff = float(np.exp(-dt / max(tau_lp, dt))) if tau_lp and tau_lp > 0 else 0.0
+
     for i in range(n_steps - 1):
         g12_curr = g12_modulation(times[i]) if g12_modulation is not None else g12_base
         g23_curr = g23_modulation(times[i]) if g23_modulation is not None else g23_base
 
-        a1 = -2 * gamma1 * v1[i] - w1**2 * x1[i] + g12_curr * (x2[i] - x1[i]) + xi[i]
+        # Update feedback LP state using current x3
+        if lp_alpha and tau_lp and tau_lp > 0:
+            lp = lp_coeff * lp + (1.0 - lp_coeff) * x3[i]
+        xi_eff = xi[i] + (lp_alpha * lp if (lp_alpha and tau_lp and tau_lp > 0) else 0.0)
+
+        a1 = -2 * gamma1 * v1[i] - w1**2 * x1[i] + g12_curr * (x2[i] - x1[i]) + xi_eff
         v1[i + 1] = v1[i] + a1 * dt
         x1[i + 1] = x1[i] + v1[i + 1] * dt
 

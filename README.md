@@ -12,6 +12,7 @@ This repository contains the simulation code, data, and analysis for our paper o
 
 - **Paper:** [`mrl_synthesis_paper/main.pdf`](mrl_synthesis_paper/main.pdf) (latest build)
 - **Data:** Core CSVs: `results/theta_sweep_today.csv` (Class S), `results/classical_parametric_mod03.csv` (Class C), `results/quantum_nonlin/kerr02_tol001.csv` (Class M), `results/quantum_nonlin/kerr00_tol001.csv` (quantum surrogate), `results/quantum_eqheat_sweep_for_figB.csv` (quantum null)
+  - Supplementary (adaptive confirmations): `results/adaptive/classC_fraction_attempt.csv` (Class C re-run), `results/adaptive/kerr08_det12_theta_grid.csv` (Class M fast grid). These confirm the same diagnostics with tighter sampling; no model changes, only runtime/sampling refinements.
 - **Figures:** [`figures/`](figures/) (scripts + PDFs for all panels)
 
 ---
@@ -106,6 +107,7 @@ PYTHONPATH=.. python make_figC.py              # Robustness (~5 sec)
 ```
 
 **Output:** `figA_classical.pdf`, `figD_parametric_classC.pdf`, `figF_quantum_nonlin.pdf`, `figB_equal_carrier.pdf`, `figE_collapse.pdf`, `figC_robustness.pdf`
+  - Supplementary adaptive figures: `figures/figD_parametric_adaptive.pdf`, `figures/figF_quantum_nonlin_adaptive.pdf`
 
 ### 3. Run Tests
 
@@ -158,7 +160,7 @@ We **do not** claim novelty of the Θ≈1 phenomenon itself (it appears across s
 | Classical | Spectral overlap (Class S) | PSD-NRMSE | < 0.03 | 0.006–0.007 | ✓ Pass |
 | Classical | Coherent modulation (Class C) | PSD-NRMSE | – | 1.08–2.13 | ✗ Surrogate fails |
 | Classical | Coherent modulation (Class C) | \|d_z\| | – | ≈0.20 | ✗ Surrogate fails |
-| Quantum | Memory backaction (Class M) | \|ΔJ\|/J* | ≤ 0.02 | ≤ 1e-3 | ✓ Pass (peak R_env ≈ 1.07) |
+| Quantum | Memory backaction (Class M) | \|ΔJ\|/J* | ≤ 0.02 | ≤ 1e-3 | ✓ Pass (peak R_env ≈ 1.11 at Θ=0.90; adaptive) |
 | Quantum | Linear boundary | \|ΔJ\|/J* | ≤ 0.02 | < 0.02 | ✓ Pass (R_env ≈ 1.00) |
 | All | Robustness | Metric consistency | - | Baseband ≈ Narrowband | ✓ Pass |
 
@@ -176,7 +178,7 @@ We **do not** claim novelty of the Θ≈1 phenomenon itself (it appears across s
 
 ### Quantum Probes (Class M)
 
-- **Detuned Kerr sweep:** Equal-carrier calibration at the operating amplitude ($|ΔJ|/J^*|≤10^{-3}$) yields a shallow peak at Θ ≈ 1.1 (R_env ≈ 1.07); auxiliary metrics agree and the fast-mode occupancy remains ≈2×10⁻².
+- **Detuned Kerr sweep:** Equal-carrier calibration at the operating amplitude ($|ΔJ|/J^*|≤10^{-3}$) yields a clear peak in the adaptive fast scan at Θ = 0.90 (R_env ≈ 1.11); auxiliary metrics agree and the fast-mode occupancy remains ≈2×10⁻².
 - **Detuned linear surrogate:** With Kerr set to zero the equal-carrier curve stays flat (R_env ≤ 1.06), demonstrating that mild nonlinearity is essential for the enhancement.
 - **Linear-Gaussian null:** Without detuning the original hierarchy returns R_env ≈ 1 for all Θ, marking the boundary of the minimal hierarchy.
 
@@ -315,12 +317,13 @@ If you use this code or data in your research, please cite:
 @article{Thompson2025MRC,
   title={Memory-Resonance Condition: A Cross-Domain Control Principle for Colored-Noise Systems},
   author={Thompson, Mat},
-  journal={arXiv preprint arXiv:XXXX.XXXXX},
-  year={2025}
+  journal={Preprint},
+  year={2025},
+  note={In preparation; see repository for latest PDF}
 }
 ```
 
-*(Update arXiv number once preprint is live)*
+*(We will update with the arXiv identifier upon posting.)*
 
 ---
 

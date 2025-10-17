@@ -194,12 +194,25 @@ def build_plot(
     ax.legend(loc="upper right", fontsize=9, framealpha=0.95)
 
     # Add MR band shading (0.7-1.4)
-    ax.axvspan(0.7, 1.4, color='lightgray', alpha=0.25, zorder=0, label='MR band')
+    ax.axvspan(0.7, 1.4, color="#d9d9d9", alpha=0.35, zorder=0)
     ax.axhline(1.0, color="grey", linestyle="--", linewidth=1.0, alpha=0.5, zorder=0)
     ax.set_xlabel(r"$\Theta = \omega_1 \tau_B$", fontsize=11)
     ax.set_ylabel("Baseband ratio", fontsize=11)
     ax.set_title("Equal-carrier sweep", fontsize=12, pad=10)
     ax.grid(True, alpha=0.3, zorder=0)
+
+    # Label the class on the curve
+    peak_idx = int(np.argmin(np.abs(theta_arr - 1.0)))
+    ax.text(
+        theta_arr[peak_idx] + 0.025,
+        mean_arr[peak_idx] * 1.003,
+        "Class M (null)",
+        color="tab:purple",
+        fontsize=12,
+        fontweight="bold",
+        ha="left",
+        va="bottom",
+    )
 
     # Fix x-axis scientific notation issues
     ax.ticklabel_format(style='plain', axis='x')

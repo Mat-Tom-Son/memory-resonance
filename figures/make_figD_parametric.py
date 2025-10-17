@@ -33,7 +33,7 @@ def main() -> None:
         baseline_sem = df_base["band_sem"].values / df_base["band_mean"].values * baseline_ratio
 
     fig, ax = plt.subplots(figsize=(6.5, 4.0))
-    ax.fill_between([0.7, 1.4], 0, 2, color="lightgray", alpha=0.3, zorder=0, label="MR band")
+    ax.axvspan(0.7, 1.4, color="#d9d9d9", alpha=0.35, zorder=0)
     ax.errorbar(theta, ratio, yerr=sem, marker="o", color="tab:blue", label="OU + modulation", linewidth=1.5)
     ax.errorbar(theta, ratio_surr, yerr=sem_surr, marker="s", color="tab:orange", label="PSD-matched surrogate", linewidth=1.2)
     if baseline_ratio is not None:
@@ -49,6 +49,19 @@ def main() -> None:
         ymax = max(ymax, baseline_ratio.max())
     ax.set_ylim(0.9, ymax * 1.1)
     ax.legend(loc="upper left")
+
+    # Annotate mechanism class on the dominant curve
+    peak_idx = int(np.argmax(ratio))
+    ax.text(
+        theta[peak_idx] + 0.03,
+        ratio[peak_idx] * 1.02,
+        "Class C",
+        color="tab:blue",
+        fontsize=12,
+        fontweight="bold",
+        ha="left",
+        va="bottom",
+    )
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     fig.tight_layout()

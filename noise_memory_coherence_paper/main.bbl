@@ -1,0 +1,120 @@
+\begin{thebibliography}{10}
+
+\bibitem{nobel_background_2025}
+{The Nobel Committee for Physics}.
+\newblock Scientific background to the nobel prize in physics 2025.
+\newblock The Royal Swedish Academy of Sciences, 2025.
+
+\bibitem{martinis1985_energy}
+John~M. Martinis, Michel~H. Devoret, and John Clarke.
+\newblock Metrologically relevant energy-level quantization in a josephson
+  junction.
+\newblock {\em Phys. Rev. Lett.}, 55:1543--1546, 1985.
+
+\bibitem{devoret1985_mqt}
+Michel~H. Devoret, John~M. Martinis, and John Clarke.
+\newblock Measurements of macroscopic quantum tunneling of the phase in a
+  josephson junction.
+\newblock {\em Phys. Rev. Lett.}, 55:1908--1911, 1985.
+
+\bibitem{blais2020_cqed}
+Alexandre Blais, Steven~M. Girvin, and William~D. Oliver.
+\newblock Quantum information processing and quantum optics with circuit
+  quantum electrodynamics.
+\newblock {\em Nat. Phys.}, 16:247--256, 2020.
+
+\bibitem{oconnell2010}
+A.~D. O'Connell, M.~Hofheinz, et~al.
+\newblock Quantum ground state and single-phonon control of a mechanical
+  resonator.
+\newblock {\em Nature}, 464:697--703, 2010.
+
+\bibitem{clarke_squid_book}
+John Clarke and Alex~I. Braginski, editors.
+\newblock {\em The SQUID Handbook}.
+\newblock Wiley-VCH, 2004.
+
+\bibitem{Mondal2018}
+D.~Mondal et~al.
+\newblock Autonomous stochastic resonance in a single damped oscillator.
+\newblock {\em Phys. Rev. E}, 98:012120, 2018.
+
+\bibitem{Brugioni2005}
+S.~Brugioni et~al.
+\newblock Coherence resonance in fitzhugh--nagumo circuits under colored noise.
+\newblock {\em Phys. Rev. E}, 72:031111, 2005.
+
+\bibitem{Moreira2020}
+S.~V. Moreira et~al.
+\newblock Transport enhancement by correlated dephasing noise.
+\newblock {\em Phys. Rev. A}, 101:012123, 2020.
+
+\bibitem{Duan2014}
+F.~Duan et~al.
+\newblock Weak colored noise improves suprathreshold signal detection.
+\newblock {\em PLoS ONE}, 9(3):e91345, 2014.
+
+\bibitem{RomeroBastida2020}
+M.~Romero-Bastida and J.~M. L\'opez.
+\newblock Enhanced energy harvesting from colored noise in harmonic chains.
+\newblock {\em Sci. Rep.}, 10:13218, 2020.
+
+\bibitem{Uchiyama2017}
+Chikako Uchiyama et~al.
+\newblock Noise-assisted transport in photosynthetic complexes.
+\newblock arXiv:1711.01025, 2017.
+
+\bibitem{zurek2003_decoherence}
+Wojciech~H. Zurek.
+\newblock Decoherence, einselection, and the quantum origins of the classical.
+\newblock {\em Rev. Mod. Phys.}, 75:715, 2003.
+
+\bibitem{joos2003}
+Erich Joos, H.~Dieter Zeh, Claus Kiefer, Domenico Giulini, Joachim Kupsch, and
+  Ion-Olimpiu Stamatescu.
+\newblock {\em Decoherence and the Appearance of a Classical World in Quantum
+  Theory}.
+\newblock Springer, 2 edition, 2003.
+
+\bibitem{Schlosshauer2019}
+Maximilian Schlosshauer.
+\newblock Quantum decoherence.
+\newblock {\em Phys. Rep.}, 831:1--57, 2019.
+
+\bibitem{Uhlenbeck1930}
+G.~E. Uhlenbeck and L.~S. Ornstein.
+\newblock On the theory of the brownian motion.
+\newblock {\em Phys. Rev.}, 36:823--841, 1930.
+
+\bibitem{Priestley1981}
+M.~B. Priestley.
+\newblock {\em Spectral Analysis and Time Series}.
+\newblock Academic Press, London, 1981.
+
+\bibitem{Nakajima1958}
+Sadao Nakajima.
+\newblock On quantum theory of transport phenomena.
+\newblock {\em Prog. Theor. Phys.}, 20:948--959, 1958.
+
+\bibitem{Zwanzig1960}
+Robert Zwanzig.
+\newblock Ensemble method in the theory of irreversibility.
+\newblock {\em J. Chem. Phys.}, 33:1338--1341, 1960.
+
+\bibitem{Breuer2002}
+H.-P. Breuer and F.~Petruccione.
+\newblock {\em The Theory of Open Quantum Systems}.
+\newblock Oxford University Press, 2002.
+
+\bibitem{Maier2019}
+Christian Maier, Thomas Brydges, Petar Jurcevic, Norbert Trautmann, Christine
+  Hempel, Ben~P. Lanyon, Philipp Hauke, Rainer Blatt, and Christian~F. Roos.
+\newblock Environment-assisted quantum transport in a 10-qubit network.
+\newblock {\em Phys. Rev. Lett.}, 122:050501, 2019.
+
+\bibitem{Plenio1998}
+M.~B. Plenio and P.~L. Knight.
+\newblock The quantum-jump approach to dissipative dynamics in quantum optics.
+\newblock {\em Rev. Mod. Phys.}, 70:101--144, 1998.
+
+\end{thebibliography}

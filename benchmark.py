@@ -54,7 +54,7 @@ def main():
 
     configs = [
         (8, 6, "Fast (testing)"),
-        (10, 8, "Medium (draft)"),
+        (10, 8, "Medium"),
         (15, 10, "Full (publication)"),
     ]
 
@@ -80,4 +80,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
